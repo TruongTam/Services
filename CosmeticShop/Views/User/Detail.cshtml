@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Thông tin khách hàng";
+    Layout = "~/Views/Shared/Users/_IndexLayout.cshtml";
+}
+@*<h1>Detail</h1>*@
+<div class="container-fluid section">
+    <form>
+        <div class="form-row" id="fullNameInput">
+            <div class="form-group col">
+                <label for="firstName">Họ</label>
+                <input type="text" class="form-control" placeholder="Họ" id="firstName" value="Nguyễn">
+            </div>
+            <div class="col">
+                <label for="middleName">Họ đệm</label>
+                <input type="text" class="form-control" placeholder="Họ Đệm" id="middleName" value="Văn">
+            </div>
+            <div class="col">
+                <label for="lastName">Tên</label>
+                <input type="text" class="form-control" placeholder="Tên" id="lastName" value="A">
+            </div>
+        </div>
+
+        <div class="form-group" id="emailInput">
+            <label for="email">E-Mail</label>
+            <input type="email" class="form-control" placeholder="E-mail hợp lệ NguyenVanA@gmail.com" id="email" value="nguyenvana@gmail.com" />
+        </div>
+
+        <div class="form-row" id="addressInput">
+            <div class="form-group col">
+                <label for="apt">Số nhà</label>
+                <input type="text" class="form-control" placeholder="Số nhà" id="apt" value="222" />
+            </div>
+            <div class="form-group col">
+                <label for="street">Đường</label>
+                <input type="text" class="form-control" placeholder="Số nhà" id="street" value="Võ Thị Sáu" />
+            </div>
+            <div class="form-group col">
+                <label for="dist">Quận</label>
+                <input type="text" class="form-control" placeholder="Số nhà" id="dist" value="Quận 3" />
+            </div>
+            <div class="form-group col">
+                <label for="city">Thành Phố</label>
+                <input type="text" class="form-control" placeholder="Số nhà" id="city" value="TP. Hồ Chí Minh" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" id="phone" class="form-control" placeholder="Số điện thoại" value="1900561252" />
+            </div>
+            <div class="form-group col">
+                <label for="dob">Ngày sinh</label>
+                <input type="date" id="dob" class="form-control" />
+            </div>
+            <div class="form-group col">
+                <label for="gender">Giới tính</label>
+                <select id="gender" class="form-control">
+                    <option selected>Nam</option>
+                    <option>Nữ</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+
+

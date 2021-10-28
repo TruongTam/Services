@@ -1,0 +1,69 @@
+﻿@model CosmeticShop.Models.Product
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+<div class="container-fluid create">
+    <a asp-action="ProductsOverview" asp-controller="Admin" class="overview__button overview__button"><i class="fas fa-backward"></i> Quay lại</a>
+    <hr>
+    <p class="create__title">Chi tiết sản phẩm</p>
+    <div class="row">
+        <div class="col-4">
+            <dl>
+                <dt>Tên sản phẩm</dt><dd>@Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>Loại sản phẩm</dt><dd>@Html.DisplayFor(model => model.ProductType.Type)
+                </dd>
+                <dt>Nhãn hàng</dt><dd>@Html.DisplayFor(model => model.ProductBrand.Name)
+                </dd>
+                <dt>Đơn giá</dt><dd>@Html.DisplayFor(model => model.Price) VNĐ
+                </dd>
+                <dt>Phần trăm giảm giá</dt><dd>@Html.DisplayFor(model => model.Saleoff) %
+                </dd>
+                <dt>Mô tả sản phẩm</dt><dd><pre>@Html.DisplayFor(model => model.Description)
+                </pre> 
+                </dd>
+            </dl>
+        </div>
+        <div class="col-4">
+            <dl>
+                <dt>Người đăng</dt><dd>@Html.DisplayFor(model => model.Admin.Username)
+                </dd>
+                <dt>Ngày đăng</dt><dd>@Html.DisplayFor(model => model.DateCreate)
+                </dd>
+                <dt>Ngày chỉnh sửa cuối</dt><dd>@Html.DisplayFor(model => model.DateModify)
+                </dd>
+                <dt>Điểm đánh giá trung bình</dt><dd>@Html.DisplayFor(model => model.Stars) / 5
+                </dd>
+                <dt>Số lượt xem</dt><dd>@Html.DisplayFor(model => model.Views)
+                </dd>
+                <dt>Số lượt đặt mua</dt><dd>@Html.DisplayFor(model => model.Orders)
+                </dd>
+                <dt>Điểm tích lũy khi mua sản phẩm</dt><dd>@Html.DisplayFor(model => model.BuyPoints)
+                </dd>
+                <dt>Số lượng hàng còn trong kho</dt><dd>@Html.DisplayFor(model => model.Instore)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-4">
+            <dl>
+                <dt>Ảnh đại diện sản phẩm</dt>
+                <dd>
+                    
+                        @if (Model.Thumbnail != "" && Model.Thumbnail != "#")
+                        {
+                            string source = @"/uploads/" + Model.Thumbnail;
+                            <img src="@source" width="300" height="300">
+                        }
+                        else
+                        {
+                            <p>Sản phẩm chưa có ảnh đại diện</p>
+                        }
+                    
+                </dd>
+            </dl>
+        </div>
+    </div>
+   
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="overview__button overview__button--new "><i class="fas fa-edit"></i> Chỉnh sửa thông tin</a>
+</div>

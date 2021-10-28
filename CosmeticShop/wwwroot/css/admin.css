@@ -1,0 +1,325 @@
+﻿body
+{
+    position: relative;
+    font-family: Quicksand;
+    background: #cdcdcd;
+}
+.login_form
+{
+    display: block;
+    margin-top: 7rem;
+    padding: 2rem;
+    border: 1px solid #cdcdcd;
+    box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.2);
+    background: #fff;
+}
+.login_form h3
+{
+    color: #fcb70a;
+}
+.login_form input
+{
+    border:none;
+    border-radius: 0px;
+    border-bottom: solid 2px #dcdcdc;
+    padding: 0.2rem 0rem;
+}
+.login_form input:focus
+{
+    outline: none;
+    border-bottom: solid 2px #FF6B00;
+    box-shadow: none;
+}
+.sidemenu
+{
+    padding: 1rem 2rem;
+}
+.sidemenu__link 
+{
+    display: block;
+    min-width: 100%;
+    padding: 1rem 1.25rem;
+    color: #fff;
+    background-color: #313131;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 1px 1px 0px 0px rgba(0,0,0,0.2);
+}
+.sidemenu__link:hover 
+{
+    text-decoration: none;
+    color: #fff;
+    background-color: #FD1961;
+    transform: translate(2rem,0rem);
+}
+.sidemenu__link--website {
+  
+    background-color: #FCB70A;
+}
+.sidemenu__link--logout {
+
+    background-color: #0A6786;
+}
+.index
+{
+    padding: 1rem 2rem 1rem 0rem;
+    min-height: 100%;
+}
+.index table
+{
+    display: table;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.2);
+}
+.index table th, .index table td {
+    padding: 0.5rem 1rem;
+    border: 1px solid #6f6f6f;
+}
+.index table th
+{
+    text-align:center;
+    background-color: #0A6786;
+    color: #fff;
+}
+.index table td {
+    color: #0A6786;
+    background-color: #fff;
+}
+.overview
+{
+    padding: 1rem;
+    background-color: #fff;
+    min-height: 42rem;
+}
+.overview__title {
+    display: inline-block;
+    float: left;
+    font-size: 1.2rem;
+    color: #000;
+    padding: 0.5rem 1rem;
+    background-color: #DDDDDD;
+    box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
+    margin: 1rem 0.2rem 1rem 0rem;
+    border-radius: 0.1rem;
+    transition: all 0.5s ease-in-out;
+}
+.overview__title--active
+{
+    background: #000;
+    color:#fff;
+}
+.overview__title:hover {
+    text-decoration: none;
+    background: #295886;
+    color: #fff;
+}
+.overview__title--active:hover 
+{
+    background:#000;
+}
+.overview__table {
+    display: table;
+    width: 100%;
+    box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.2);
+}
+.overview__table td,.overview__table th
+{
+    padding: 0.75rem 1rem;
+    text-align: center;
+}
+.overview__table--orders td, .overview__table--orders {
+    border-bottom: 1px white solid;
+}
+.overview__table--orders td a {
+    color: #fff;
+}
+.overview__table tr:first-child
+{
+    border: 1px solid #313131;
+}
+.overview__table tr:hover
+{
+    background-color: #0A6786;
+    transition: all 0.5s ease-in-out;
+    transform: translate(-10px,-10px);
+    color: #fff;
+}
+.overview__table tr:first-child:hover 
+{
+    background: #fff;
+    transform: translate(0px,0px);
+    color: #000;
+}
+.overview__table tr:hover a {color:white}
+.orders--waiting {
+    background-color: #FF6B00;
+    color: #fff;
+}
+.orders--deliverying {
+    background-color: #0ECB33;
+    color: #fff;
+}
+.orders--delivered {
+    background-color: #0A6786;
+    color: #fff;
+}
+.pagi
+{
+    padding: 0.5rem 1rem;
+    color: #313131;
+    margin: 1rem 0rem 0rem 0rem;
+}
+.pagi:hover 
+{
+    background-color: #505050;
+    color: #fff;
+}
+.pagi--active
+{
+    background-color: #FD1961;
+    color: #fff;
+}
+.overview__button
+{
+    display: inline-block;
+    clear:both;
+    padding: 0.5rem 1rem;
+    background-color: #313131;
+    color:#fff;
+    box-shadow:  2px 2px 1px 0px rgba(0,0,0,0.2);
+    margin: 0rem 0rem 0.5rem 0rem;
+}
+.overview__button--new
+{
+    background-color: #FD1961;
+}
+.overview__table--products tr, .overview__table--users tr, .overview__table--admins tr, .overview__table--brands tr{
+    border: 1px #5c5c5c solid;
+}
+.overview__table--products tr:first-child,.overview__table--products tr:first-child:hover{
+    background: #FCB70A;
+    color: #313131;
+}
+.overview__table--users tr:first-child,.overview__table--users tr:first-child:hover{
+    background: #107C48;
+    color: #fff;
+}
+.overview__button--delete
+{
+    background-color: #ff0000;
+    color: #fff;
+    border-radius: 0rem;
+    font-size: 1rem;
+    padding: 0.35rem 0.5rem;
+}
+.create
+{
+    padding: 1rem 2rem;
+    background-color: #fff;
+    min-height: 40rem;
+}
+.create__title {
+    padding: 0.5rem 0rem;
+    display: inline-block;
+    color: #4B4B4B;
+    font-size: 1.4rem;
+}
+.create input:focus,.create select:focus,.create textarea:focus
+{
+    border: 1px solid #FCB70A;
+    box-shadow: 0px 0px 2px 2px #FCB70A;
+}
+.ck-content
+{
+    height: 20rem;
+}
+.create .custom-file
+{
+    margin-top: 1rem;
+}
+.create__button
+{
+    display: block;
+    width:100%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #fff;
+    outline: none;
+    border: 0;
+    box-shadow: 1px 1px 0px 1px rgba(0,0,0,0.2);
+    border-radius: 1rem;
+}
+.create__button--upload
+{
+    background: #0ECB33;
+}
+.create__button--preview
+{
+    background: #FF6B00;
+}
+.create__button--release
+{
+    background: #0A6786;
+}
+#ThumbnailReview{padding: 0rem 2rem 1rem 2rem;}
+#ThumbnailReview img
+{
+    display:inline-block;
+    width: 100%;
+    height: 100%;
+    max-height: 40rem;
+    border: 2px solid #313131;
+    box-shadow: 1px 1px 0px 1px rgba(0,0,0,0.2);
+}
+
+.overview__table--brands tr:first-child
+{
+    background: #0A6786;
+    color: #fff;
+}
+.overview__table--brands tr:hover{
+    transform:translate(0px,0px);
+    background: #fff;
+    color: #000;
+}
+.overview__table--brands td a
+{
+    font-weight: bold;
+    color: #0A6786;
+}
+.brands__button
+{
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: #fff;
+    border:none;
+    box-shadow: 1px 1px 0px 1px rgba(0,0,0,0.2);
+}
+.brands__button--edit
+{
+    background:#FF6B00;
+}
+.brands__button--delete
+{
+    background:#313131;
+}
+.button
+{
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    font-size: 1.1rem;
+    outline: none;
+    border: 0;
+}
+.button--submit
+{
+    background-color: #107C48;
+    color: #fff;
+}
+.button--back
+{
+    background: #295886;
+    color: #fff;
+}

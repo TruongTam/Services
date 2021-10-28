@@ -1,0 +1,63 @@
+@model CosmeticShop.Models.User
+@{
+    ViewBag.Title = "Thông tin khách hàng";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<div class="container-fluid create">
+    <div class="row">
+        <a class="button button--back" asp-controller="Admin" asp-action="UsersOverview">Quay về</a><hr>
+    </div>
+    <div class="row">
+        <h2>Thông tin khách hàng</h2>
+    </div>
+    <div class="row">
+        <form>
+            <div class="form-group">
+                <label>Họ và tên</label>
+                @{
+                    string fullname = Model.NameLast ;
+                    if (Model.NameMiddle != null) {fullname += " " + Model.NameMiddle;}
+                    fullname += " " + Model.NameFirst;
+                }
+                <input type="text" class="form-control" value="@fullname" readonly>
+            </div>
+            <div class="form-row">
+                <div class="col form-group">
+                    <label>Giới tính</label>
+                    @{
+                        string gender = "";
+                        if (Model.Gender == "female"){ gender = "Nữ";}
+                        else { gender = "Nam";}
+                    }
+                    <input type="text" class="form-control" value="@gender" readonly>
+                </div>
+                <div class="col form-group">
+                    <label>Ngày sinh</label>
+                    <input type="text" class="form-control" value=@Model.DateBirth.ToString("yyyy-MM-dd") readonly>
+                </div>
+                <div class="col form-group">
+                    <label>Điểm tích lũy</label>
+                    <input type="text" class="form-control" value="@Model.BuyPoints" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col form-group">
+                    <label>Số diện thoại</label>
+                    <input type="text" class="form-control" value="@Model.PhoneNumber" readonly>
+                </div>
+                <div class="col form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" value="@Model.Email" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ</label>
+                @{
+                    string address = Model.AddressApartment + ", " + Model.AddressStreet + ", " + Model.AddressDistrict + ", " + Model.AddressCity;
+                }
+                <input type="text" class="form-control" value="@address" readonly>
+            </div>
+        </form>
+    </div>
+</div>

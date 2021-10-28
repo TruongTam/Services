@@ -1,0 +1,63 @@
+@model CosmeticShop.ViewModels.AdminAdminNewViewModel
+@{
+    ViewData["Title"] = "Thêm quản trị viên mới";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<div class="container-fluid create">
+    <a asp-action="AdminsOverview" asp-controller="Admin" class="overview__button overview__button"><i class="fas fa-backward"></i> Quay lại</a>
+    <hr>
+        <p class="create__title">Quản trị viên mới</p>
+        
+        <form asp-controller="Admin" asp-action="AdmintNew" method="post" >
+            <div class="form-group">
+                <label asp-for="@Model.Admin.Username">Tên đăng nhập <span class="text-danger">*</span></label>
+                <input asp-for="@Model.Admin.Username" type="text" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Admin.Password">Mật khẩu <span class="text-danger">*</span></label>
+                <input asp-for="@Model.Admin.Password" type="text" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Admin.Email">Email <span class="text-danger">*</span></label>
+                <input asp-for="@Model.Admin.Email" type="text" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Admin.Role_Id">Quyền hạn</label>
+                <select asp-for="@Model.Admin.Role_Id" class="form-control">
+                    @foreach (var role in Model.Roles)
+                    {
+                        @if (role.Name.ToLower().Trim() != "user" )
+                        {
+                            <option value="@role.Id">
+                                @role.Name
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="button button--submit">Hoàn tất</button>
+            </div>
+            
+            <!-- Những thông tin giấu đi -->
+            <div class="form-row">      
+                <input type="hidden" asp-for="@Model.Admin.DateCreate"   value="@DateTime.Now" readonly>          
+                <input type="hidden" asp-for="@Model.Admin.DateModify"   value="@DateTime.Now" readonly>
+            </div>
+        </form>
+</div>
+
+<script>
+    function Caculate()
+    {
+        var price = parseInt(document.getElementById("Product_Price").value,10);
+        var sale = parseInt(document.getElementById("Product_Saleoff").value,10);
+        var sold = price - (price/100)*sale;
+        document.getElementById("SalePrice").value = sold;
+    }
+</script>

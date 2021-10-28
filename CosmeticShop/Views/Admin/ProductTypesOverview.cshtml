@@ -1,0 +1,122 @@
+@model CosmeticShop.ViewModels.AdminProductTypesViewModel
+@{
+    ViewData["Title"] = "Tổng quan các loại sản phẩm";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+    }
+
+    form.example button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+
+        form.example button:hover {
+            background: #0b7dda;
+        }
+
+    form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+
+<div class="container-fluid overview">
+    <div class="row">
+        <div class="container-fluid">
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="overview__title overview__title--products">Sản phẩm</a>
+            <a asp-controller="Admin" asp-action="ProductBrandsOverview" class="overview__title overview__title--brands">Thương Hiệu</a>
+            <a asp-controller="Admin" asp-action="ProductTypesOverview" class="overview__title overview__title--types overview__title--active">Loại sản phẩm</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid">
+            <form class="form-inline" asp-action="ProductTypesOverview" asp-controller="Admin" method="post">
+                <div class="form-group"><input type="text" asp-for="@Model.ProductType.Type" class="form-control" placeholder="Tên loại sản phẩm"></div>
+                <button style="margin-left:0.5rem" type="submit" class="button button--submit"><i class="fas fa-plus"></i> Thêm loại sản phẩm</button>
+                <input type="hidden" asp-for="@Model.ProductType.DateCreate" value="@DateTime.Now">
+                <input type="hidden" asp-for="@Model.ProductType.DateModify" value="@DateTime.Now">
+                <input type="hidden" asp-for="@Model.ProductType.Admin_Id">
+                <input type="hidden" asp-for="@Model.ProductType.URL">
+            </form>
+            <hr>
+        </div>
+    </div>
+   
+    <br />
+    <div class="row">
+        <div class="container-fluid">
+            <table class="overview__table overview__table--products">
+                <tr>
+                    <th>Loại sản phẩm</th>
+                    <th>Url</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày chỉnh sửa cuối</th>
+                    <th>Số lượng sản phẩm</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.ProductTypes)
+                {
+                    <tr>
+                        <td><a asp-controller="Admin" asp-action="ProductTypeEdit" asp-route-id="@item.Id">@item.Type</a></td>
+                        <td>@item.URL</td>
+                        <td>
+                            @item.DateCreate
+                        </td>
+                        <td>
+                            @item.DateModify
+                        </td>
+                        @{
+                            int number = 0;
+                            foreach (var product in Model.Products)
+                            {
+                                if (product.ProductType_Id == item.Id) { number++; }
+                            }
+                        }
+                        <td>
+                            @number
+                        </td>
+                        <td><a asp-action="ProductTypeDelete" asp-controller="Admin" asp-route-id="@item.Id" class="overview__button overview__button--delete"><i class="fas fa-trash-alt"></i> Xóa</a></td>
+                    </tr>
+
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container txt-center w100">
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi pagi--active">1</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">2</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">3</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">4</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">5</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">6</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">7</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">8</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">9</a>
+        </div>
+    </div>
+</div>

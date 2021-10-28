@@ -1,0 +1,110 @@
+@model CosmeticShop.ViewModels.UserMyOrderDetailViewModel
+@{
+    ViewBag.Title = "Đơn đặt hàng của tôi";
+    Layout = "~/Views/Shared/Users/_IndexLayout.cshtml";
+    int user_id = (int)Context.Session.GetInt32("IdTaiKhoan");
+    
+}
+
+<div class="container-fluid section">
+    <h2>Đơn hàng của @Context.Session.GetString("TenTaiKhoan")</h2>
+    <div class="row">
+        <div class="col-4">
+            @foreach (var vm in Model.MyOrderViewModels)
+            {
+                @if (vm.Order.OrderStatus_Id != 4)
+                {
+                    string status = "Đang chờ xử lý";
+                    if (vm.Order.OrderStatus_Id == 2) {status = "Đang lấy hàng";}
+                    else if (vm.Order.OrderStatus_Id == 3) {status = "Đang vận chuyển";}
+                    <a asp-controller="User" asp-action="MyOrderDetail" asp-route-user_id="@user_id" asp-route-order_id="@vm.Order.Id" class="blck vm_order">
+                        <p class="vm_order__id">Mã đơn hàng: @vm.Order.Id</p>
+                        <p class="vm_order__status">
+                            @status
+                        </p>
+                        <p class="vm_order__p">Ngày đặt hàng: @vm.Order.DateCreate.ToString("dd/MM/yyyy hh:mm")</p>
+                        <p class="vm_order__p">Tổng cộng: @String.Format("{0:0,0 VNĐ}", vm.Order.TotalPrice)</p>
+                     </a>
+                }
+            }
+        </div>
+        <div class="col-8">
+            <h3>Thông tin giao hàng</h3>
+            <form>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label>Họ</label>
+                        <input type="text" asp-for="@Model.MyOrderViewModel.Order.NameLast" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label>Họ đệm</label>
+                        <input type="text" asp-for="@Model.MyOrderViewModel.Order.NameMiddle" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label>Tên</label>
+                        <input type="text" asp-for="@Model.MyOrderViewModel.Order.NameFirst" class="form-control" readonly>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="text" asp-for="@Model.MyOrderViewModel.Order.PhoneNumber" class="form-control" readonly>
+                </div>
+            
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label>Số nhà</label>
+                        <input type="text" asp-for="@Model.MyOrderViewModel.Order.AddressApartment" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label>Đường</label>
+                        <input type="text" asp-for="@Model.MyOrderViewModel.Order.AddressStreet" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label>Quận / Huyện</label>
+                        <input type="text" asp-for="@Model.MyOrderViewModel.Order.AddressDistrict" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label>Tỉnh / Thành phố</label>
+                        <input type="text" asp-for="@Model.MyOrderViewModel.Order.AddressCity" class="form-control" readonly>
+                    </div>
+                </div>
+            </form>
+
+            <h3>Chi tiết đơn hàng</h3>
+            <table class="table">
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+                @foreach (var detail in Model.MyOrderViewModel.OrderDetails)
+                {
+                    <tr>
+                        @foreach (var product in Model.MyOrderViewModel.Products)
+                        {
+                            @if (product.Id == detail.Product_Id)
+                            {
+                                <td>
+                                    @product.Name
+                                </td>
+                            }
+                        }
+                        <td>
+                            @detail.Quantity
+                        </td>
+                        <td>
+                            @String.Format("{0:0,0 VNĐ}", detail.PriceTotal)
+                        </td>
+                    </tr>
+                }
+            </table>
+            <h4>
+                Tổng cộng: @String.Format("{0:0,0 VNĐ}", Model.MyOrderViewModel.Order.TotalPrice)
+            </h4>
+        </div>
+    </div>    
+</div>
+

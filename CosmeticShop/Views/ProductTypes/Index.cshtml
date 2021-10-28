@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CosmeticShop.Models.ProductType>
+
+    @{
+    ViewData["Title"] = "";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+    }
+
+
+    <div class="container-fluid overview">
+        <div class="row">
+            <div class="container-fluid">
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="overview__title overview__title--products">Sản phẩm</a>
+                <a asp-controller="Admin" asp-action="ProductBrandsOverview" class="overview__title overview__title--brands">Nhãn hàng</a>
+                <a asp-controller="ProductTyPes" asp-action="index  " class="overview__title overview__title--types overview__title--active">Loại sản phẩm</a>
+            </div>
+        </div>
+        <a asp-controller="ProductTyPes" asp-action="Create" class="overview__button overview__button--new"><i class="fas fa-plus"></i>Thêm Loại Sản Phẩm</a>
+
+        <table class="overview__table overview__table--products">
+            <tr>
+                <th>Loại Sản Phẩm</th>
+                <th>Ngày Tạo</th>
+                <th>Ngày Chỉnh Sửa Cuối</th>
+                <th>Sửa</th>
+                <th>Xóa</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+
+            <tr>
+                <td><a asp-controller="ProductTypes" asp-action="Details" asp-route-id="@item.Id">@item.Type</a></td>
+                <td>@item.DateCreate</td>
+                <td>@item.DateModify</td>
+
+                <td>
+                    <a asp-action="Edit" asp-controller="ProductTyPes" asp-route-id="@item.Id" class="overview__button overview__button-- "><i class="fas fa-edit"></i>Edit</a>
+
+                </td>
+                <td><a asp-action="Delete" asp-controller="ProductTyPes" asp-route-id="@item.Id" class="overview__button overview__button--delete"><i class="fas fa-trash-alt"></i>Delete</a></td>
+            </tr>
+
+            }
+        </table>
+
+        <div class="row">
+            <div class="container txt-center w100">
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi pagi--active">1</a>
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">2</a>
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">3</a>
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">4</a>
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">5</a>
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">6</a>
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">7</a>
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">8</a>
+                <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">9</a>
+            </div>
+        </div>
+    </div>

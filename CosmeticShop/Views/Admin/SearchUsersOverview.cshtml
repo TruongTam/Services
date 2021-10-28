@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CosmeticShop.Models.User>
+@{
+    ViewData["Title"] = "UsersOverview";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+    }
+
+    form.example button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+
+        form.example button:hover {
+            background: #0b7dda;
+        }
+
+    form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+<div class="container-fluid overview">
+    <div>
+        <p class="overview__title">Khách hàng đã đăng ký</p>
+
+        <form class="example" style="max-width:300px" action="~/SearchUsersOverview/" method="get">
+            <input type="text" placeholder="Tìm tên khách hàng" name="key_s">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    <hr />
+    <table class="overview__table overview__table--users">
+        <tr>
+            <th>Mã khách hàng</th>
+            <th>Họ và tên</th>
+            <th>Email</th>
+            <th>SĐT</th>
+            <th>Điểm tích lũy</th>
+            <th></th>
+        </tr>
+        @foreach (var user in Model)
+        {
+            string fullname = user.NameLast;
+            if (user.NameMiddle != null) { fullname += " " + user.NameMiddle; }
+            fullname += " " + user.NameFirst;
+
+            <tr>
+                <td><a asp-action="UserDetail" asp-route-id="@user.Id" asp-controller="Admin"> @user.Id </a> </td>
+                <td><a asp-action="UserDetail" asp-route-id="@user.Id" asp-controller="Admin">@fullname</a> </td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.BuyPoints</td>
+                <td><a asp-action="UserDelete" asp-controller="Admin" asp-route-id="@user.Id" class="overview__button overview__button--delete"><i class="fas fa-trash-alt"></i>Delete</a></td>
+            </tr>
+        }
+    </table>
+
+    <div class="row">
+        <div class="container txt-center w100">
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi pagi--active">1</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">2</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">3</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">4</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">5</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">6</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">7</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">8</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">9</a>
+        </div>
+    </div>
+</div>

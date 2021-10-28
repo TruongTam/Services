@@ -1,0 +1,90 @@
+﻿@model CosmeticShop.Models.Product
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+<div class="container-fluid create">
+    <a asp-action="ProductsOverview" asp-controller="Admin" class="overview__button overview__button"><i class="fas fa-backward"></i>Back to List</a>
+    <hr>
+    <form asp-action="Edit">
+        <div class="row">
+            <div class="col-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="DateModify" value="@DateTime.Now" />
+
+                <div class="form-group">
+                    <label asp-for="ProductBrand_Id" class="control-label">Nhãn hàng</label>
+                    <select asp-for="ProductBrand_Id" class="form-control" asp-items="ViewBag.ProductBrand_Id"></select>
+                    <span asp-validation-for="ProductBrand_Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductType_Id" class="control-label">Loại sản phẩm</label>
+                    <select asp-for="ProductType_Id" class="form-control" asp-items="ViewBag.ProductType_Id"></select>
+                    <span asp-validation-for="ProductType_Id" class="text-danger"></span>
+                </div>
+               
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea rows="10" cols="300" class="form-control" asp-for="Description">Mô tả sản phẩm</textarea>
+                    <!-- Đổi textarea thành ckeditor -->
+                    <script src="~/js/ckeditor.js"></script>
+                    <script>
+                        ClassicEditor
+                            .create(document.querySelector('#Description'))
+                            .then(editor => {
+                                window.editor = editor;
+                            })
+                            .catch(err => {
+                                console.error(err.stack);
+                            });
+                    </script>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Saleoff" class="control-label"></label>
+                    <input asp-for="Saleoff" class="form-control" />
+                    <span asp-validation-for="Saleoff" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label asp-for="Thumbnail" class="control-label"></label>
+                    <input asp-for="Thumbnail" class="form-control" />
+                    <span asp-validation-for="Thumbnail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Instore" class="control-label"></label>
+                    <input asp-for="Instore" class="form-control" />
+                    <span asp-validation-for="Instore" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="BuyPoints" class="control-label"></label>
+                    <input asp-for="BuyPoints" class="form-control" />
+                    <span asp-validation-for="BuyPoints" class="text-danger"></span>
+                </div>
+            </div>
+            
+            
+        </div>
+    </form>
+</div>
+
+

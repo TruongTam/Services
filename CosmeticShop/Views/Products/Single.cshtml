@@ -1,0 +1,213 @@
+﻿@model CosmeticShop.ViewModels.SingleProductViewModel;
+@{
+    ViewBag.Title = "SingleProduct";
+    Layout = "~/Views/Shared/Users/_IndexLayout.cshtml";
+}
+<head>
+    @section OpenGraph{
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="@Model.SingleProduct.Name">
+        <meta property="og:description" content="Sản phẩm chính hãng giá rẻ.">
+        <meta property="og:site_name" content="cosmeticshop20.azurewebsites.net">
+        <meta property="og:image" content="https://cosmeticshop20.azurewebsites.net/uploads/@Model.SingleProduct.Thumbnail">
+        <meta property="og:image:height" content="150px">
+        <meta property="og:image:width" content="150px">
+    }
+</head>
+<div class="container-fluid section__product">
+    <div class="row">
+        <!-- Sản phẩm tương tự -->
+        <div class="col-3 product__side">
+            <p class="product_side__title txt-center">SẢN PHẨM TƯƠNG TỰ</p>
+            @foreach (var item in Model.ProductsSimilar)
+            {
+                <a href="~/@item.TypeUrl/@item.NameUrl" class="blck other_product">
+                    <img class="iblck fl" src="~/uploads/@item.Thumbnail">
+                    <div class="iblck">
+                        <p class="other_product__name">@item.Name</p>
+                        @if (item.Saleoff != 0)
+                        {
+                            <p class="other_product__oldprice">@String.Format("{0:0,0 VNĐ}", item.Price) </p>
+                            <p class="other_product__newprice">@String.Format("{0:0,0 VNĐ}", item.Price - (item.Price / 100 * item.Saleoff))</p>
+                        }
+                        else
+                        {
+                            <p class="other_product__newprice">@String.Format("{0:0,0 VNĐ}", item.Price)</p>
+                        }
+                    </div>
+                </a>
+            }
+        </div><!-- end of Sản phẩm tương tự -->
+        <!-- Chi tiết sản phẩm -->
+        <div class="col-9 product__main">
+            <!-- Tên sản phẩm -->
+            <p class="product__main__name">@Model.SingleProduct.Name</p>
+            <!-- Link sản phẩm -->
+            <div class="product__main__link">
+                <a href="Home/Index" class="iblck">Trang chủ </a><i class="fas fa-chevron-right"></i>
+                <a href="#" class="iblck">@Model.ProductType </a><i class="fas fa-chevron-right"></i>
+                <a href="#" class="iblck">@Model.ProductBrand </a><i class="fas fa-chevron-right"></i>
+                <a href="#" class="iblck">@Model.SingleProduct.Name</a>
+            </div>
+
+            <div class="row">
+                <!-- Thông tin chính -->
+                <div class="col-9">
+                    <img src="~/uploads/@Model.SingleProduct.Thumbnail"  style="width:100%; height:500px;">
+                    <table>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <td>@Model.SingleProduct.Name</td>
+                        </tr>
+                        <tr>
+                            <th>Giá cũ</th>
+                            <td class="oldprice">@String.Format("{0:0,0 VNĐ}", Model.SingleProduct.Price)</td>
+                        </tr>
+                        <tr>
+                            <th>Giá mới</th>
+                            <td class="newprice">@String.Format("{0:0,0 VNĐ}", Model.SingleProduct.Price - (Model.SingleProduct.Price / 100 * Model.SingleProduct.Saleoff))</td>
+                        </tr>
+                        <tr>
+                            <th>Chi tiết sản phẩm</th>
+                            <td>
+                                @Html.Raw(Model.SingleProduct.Description)
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <br />  <br />
+                        @Html.Raw(Model.SingleProduct.Article)
+                    </div>
+                    <!-- Viết đánh giá phản hồi -->
+                    @if (Context.Session.GetInt32("IdTaiKhoan").HasValue)
+                    {
+                        <div class="blck w100 writecomment">
+                            <p class="mrg0 iblck writecomment__username"><strong>@Context.Session.GetString("TaiKhoan")</strong></p>
+                            <div class="iblck writecomment__stars">
+                                <script>
+                                    function DrawStars(_point) {
+                                        var yellow = parseInt(_point, 10);
+                                        var display = "";
+                                        for (var i = 1; i <= 5; i++) {
+                                            if (i < yellow || i == yellow) {
+                                                display += "<i class=\"fas fa-star star--yellow\" onclick=\"DrawStars(" + parseInt(i, 10) + ")\"></i>";
+                                            }
+                                            else {
+                                                display += "<i class=\"fas fa-star star--black\" onclick=\"DrawStars(" + parseInt(i, 10) + ")\"></i>";
+                                            }
+
+                                        }
+                                        document.getElementsByClassName("writecomment__stars")[0].innerHTML = display;
+                                        document.getElementsByClassName("writecomment__points")[0].value = parseInt(yellow, 10);
+                                        document.getElementById("stars").value = parseInt(yellow, 10);
+                                    }</script>
+                                <i class="fas fa-star" onclick="DrawStars(1)"></i>
+                                <i class="fas fa-star" onclick="DrawStars(2)"></i>
+                                <i class="fas fa-star" onclick="DrawStars(3)"></i>
+                                <i class="fas fa-star" onclick="DrawStars(4)"></i>
+                                <i class="fas fa-star" onclick="DrawStars(5)"></i>
+                            </div>
+                            <form asp-controller="#" asp-action="#" method="post">
+                                <!-- Dòng input này để form gửi số điểm đánh giá sản phẩm lưu vào database, không được xóa -->
+                                <div id="stars" class="col-2"><input type="text" class="writecomment__points" name="stars" value="0" readonly hidden /></div>
+                                <textarea id="content" class="blck w100" cols="10" rows="1" placeholder="Đê lại bình luận hoặc đánh giá về sản phẩm tại đây ..."></textarea>
+                                <div class="txt-right"><button type="button" onclick="addComment(@Context.Session.GetInt32("IdTaiKhoan").Value, @Model.SingleProduct.Id)">Đăng bình luận</button></div>
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        @:<p class="mrg0 iblck writecomment__username"> Đăng nhập để thêm bình luận <p>
+                        }
+                    <div class="container-fluid mrg0 padd0" id="CommentContainer">
+                        @foreach (var com in Model.ProductComments.Comments)
+                        {
+                            <div class="comment">
+                    <p class="mrg0 iblck comment__username">@com.User</p>
+                    <p class="mrg0 iblck comment__datetime"><i>@com.DateCreate</i></p>
+                    <div class="blck comment_stars">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= com.Stars)
+                            {
+                                <i class="fas fa-star star--yellow"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-star"></i>
+                            }
+                        }
+                    </div>
+                    <div class="comment__content">
+                        <p>@com.Content</p>
+                    </div>
+                </div>
+            }
+                        @if (Model.ProductComments.StillComments)
+                        {
+                            <button onclick="moreComments(@Model.ProductComments.IdProduct)" class="more-cmt">Xem Thêm</button>
+                        }
+                    </div>
+                </div><!-- end of Thông tin chính -->
+                <!-- Các nút Mua hàng,Thêm vào giỏ,Chia sẻ -->
+                <div class="col-3 relative">
+                    <div class="product__main__info">
+                        <p class="iblck"><i class="fas fa-star"></i> @Model.SingleProduct.Stars/5</p>
+                        <p class="iblck"><i class="fas fa-eye"></i> @Model.SingleProduct.Views</p>
+                        <p class="iblck"><i class="fas fa-shopping-cart"></i> @Model.SingleProduct.Orders</p>
+                    </div>
+                    <div class="product__main__actions sticky">
+                        <a href="/Cart/SingleAddToCart/@Model.SingleProduct.Id" class="point action action--addtocart"><i class="fas fa-shopping-cart"></i> THÊM VÀO GIỎ</a>
+                        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5dea16c838bd637b"></script>
+                        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                        <div class="addthis_inline_share_toolbox_05nr"></div>
+                    </div>
+
+        
+                    <!--<div class="product__main__tags">
+                        <a href="#">#laptop</a><a href="#">#SONY</a><a href="#">#2019</a>
+                    </div>-->
+                </div><!-- end of Các nút Mua hàng,Thêm vào giỏ,Chia sẻ -->
+            </div><!-- end of Chi tiết sản phẩm -->
+        </div>
+        </div>
+        </div>
+        <p id="demo"></p>
+
+
+        <script>
+            var page = 1;
+        </script>
+        <script>
+            function moreComments(id) {
+                page++;
+                $.ajax({
+                    url: "/Products/MoreComment",
+                    type: "POST",
+                    data: { id: id, page: page },
+                    dataType: "HTML",
+                    async: true,
+                    success: function (data) {
+                        $("#CommentContainer").html(data);
+
+                    },
+                });
+            };
+            function addComment(idUser, idProduct) {
+                var content = $("#content").val();
+                var stars = $("#stars").val();
+                if (content != "") {
+                    $.ajax({
+                        url: "/Products/addComment",
+                        type: "POST",
+                        data: { idUser: idUser, idProduct: idProduct, stars: stars, content: content },
+                        dataType: "HTML",
+                        async: true,
+                        success: function (data) {
+                            $("#CommentContainer").html(data);
+                        },
+                    });
+                }
+            };
+        </script>

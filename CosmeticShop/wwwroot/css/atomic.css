@@ -1,0 +1,16 @@
+﻿.txt-left {text-align: left}
+.txt-right {text-align: right}
+.txt-center{text-align: center}
+.fl {float:left}
+.fr {float:right}
+.iblck {display: inline-block}
+.blck {display: block}
+.mrg0{margin: 0}
+.padd0 {padding: 0}
+.w100 {width: 100%}
+.h100 {height: 100%;}
+.relative {position: relative}
+.absolute {position: absolute}
+.fixed {position: fixed}
+.sticky{position: sticky}
+.padd10{padding-left:10%; padding-right:10%;}

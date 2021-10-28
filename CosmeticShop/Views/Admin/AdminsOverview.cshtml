@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CosmeticShop.Models.Admin>
+@{
+    ViewData["Title"] = "Quản trị viên";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<div class="container-fluid overview">
+    <div class="row">
+        <div class="container-fluid">
+            <p class="overview__title">Thành Viên của Cosmetic</p>
+        </div>
+    </div>
+    <a asp-controller="Admin" asp-action="AdminNew" class="overview__button overview__button--new"><i class="fas fa-plus"></i>Thêm quản trị viên</a>
+
+
+    <table class="overview__table overview__table--admins">
+        <tr>
+            <th>Tài khoản</th>
+            <th>Email</th>
+            <th>Quyền</th>
+            <th>Ngày tạo</th>
+            <th></th>
+        </tr>
+        @foreach (var admin in Model)
+        {
+            String @a = "Nhân Viên";
+            if (@admin.Role_Id == 1) @a = "Quản Lý";
+            <tr>
+                <td><a asp-action="AdminEdit" asp-controller="Admin" asp-route-id="@admin.Id">@admin.Username</a></td>
+                <td>@admin.Email</td>
+                <td>@a</td>
+                <td>@admin.DateCreate</td>
+                <td><a asp-action="AdminDelete" asp-controller="Admin" class="overview__button overview__button--delete" asp-route-id="@admin.Id"><i class="fas fa-trash-alt"></i>Delete</a></td>
+                <td><a asp-action="AdminEdit" asp-controller="Admin" class="btn btn-outline-warning" asp-route-id="@admin.Id"><i class="fas fa-pencil-ruler"></i>Chỉnh Sửa</a></td>
+            </tr>
+        }
+    </table>
+    @*Phân trang adimin*@
+    @*<div class="row">
+        <div class="container txt-center w100">
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi pagi--active">1</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">2</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">3</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">4</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">5</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">6</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">7</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">8</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">9</a>
+        </div>
+    </div>*@
+</div>

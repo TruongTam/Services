@@ -1,0 +1,97 @@
+﻿@using CosmeticShop.Models;
+@using Microsoft.AspNetCore.Http;
+<footer>
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5da3c3835de3e70013e3bcee&product=inline-share-buttons" async="async"></script>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <!-- Your share button code -->
+    <div class="sharethis-inline-share-buttons"
+         data-href="http://cosmeticshop.somee.com/"
+         data-layout="button_count">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 footer__info">
+              
+                @{
+                    int n1 = Model.productBrands.Count;
+                    @if (n1 > 0)
+                    {
+
+
+                        @for (int i = 0; i < n1; i++)
+                        {
+                            var type = Model.productBrands[i] as ProductBrand;
+                            ViewBag.hau = type;
+                            <a href="~/Products/@type.Name" class="iblck">#@type.Name</a>
+                           
+                        }
+
+
+
+                    }
+                }
+            </div>
+            <div class="col-4 footer__nav">
+
+                @{
+                    int n = Model.ProductTypes.Count;
+                    @if (n > 0)
+                    {
+
+
+                        @for (int i = 0; i < n; i++)
+                        {
+                            var type = Model.ProductTypes[i] as ProductType;
+                            ViewBag.hau = type;
+                            <a href="~/@type.URL" class="iblck">#@type.Type</a>
+                        }
+
+
+
+                    }
+                }
+            </div>
+
+
+            <div class="col-4 footer__map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.6511106447715!2d106.68001421428689!3d10.761348962415688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1b888ab357%3A0xc469f6e800231314!2zMjgwIEFuIETGsMahbmcgVsawxqFuZywgUGjGsOG7nW5nIDQsIFF14bqtbiA1LCBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1570035092189!5m2!1svi!2s" width="100" height="100" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4 style="color:red; text-align:center;">
+                <i class="fas fa-store"></i> Địa chỉ cửa hàng: 280 An Dương Vương, Quận 5 thành phố Hồ Chí Minh <br />
+                <i class="fas fa-clock"></i> Giờ mở cửa: 8h30 sáng đến 9h tối các ngày trong tuần<br />
+                <i class="fab fa-facebook"></i> Fanpage: <a href="https://www.facebook.com" target="_blank">https://www.facebook.com</a><br />
+            </h4>
+            <br />
+            <h5 style=" text-align:center; color:white">© 2019 Cosmetic. All rights reserved | Coppy right TTWinnerart</h5>
+        </div>
+        
+    </div>
+    <br />
+    <br />
+</footer>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/5dec8b4ad96992700fcb4738/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->

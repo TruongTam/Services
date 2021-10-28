@@ -1,0 +1,120 @@
+﻿@model IEnumerable<CosmeticShop.Models.User>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameFirst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameMiddle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameLast)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressApartment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressStreet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressDistrict)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuyPoints)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateModify)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameFirst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameMiddle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameLast)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressApartment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressStreet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressDistrict)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuyPoints)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateModify)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

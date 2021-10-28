@@ -1,0 +1,218 @@
+﻿@model CosmeticShop.ViewModels.ListItemProductsViewModel
+@{
+    ViewBag.Title = "CosmeticShop - Danh sách sản phẩm";
+    Layout = "~/Views/Shared/Users/_IndexLayout.cshtml";
+    ViewBag.SearchFlag = "Sản phẩm mới";
+}
+<style>
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
+
+<div class="container-fluid section">
+    <!-- Sản phẩm mới -->
+    <div class="container">
+        <h1 class="section__title">Kết quả tìm kiếm: </h1><h3 class="iblck" style="margin-left: 1rem">
+            Tất cả các sản phẩm:
+            @if (ViewBag.Tenpa != null)
+            {
+                @ViewBag.Tenpa
+            }
+        </h3>
+
+        @if (ViewBag.Tenpa ==null)
+        {<div class="dropdown">
+                <button class="dropbtn">Sắp Xếp</button>
+                <div class="dropdown-content">
+                    <a href="~/products/ascending">Giá từ thấp tới cao</a>
+                    <a href="~/products/descending">Giá từ cao xuống thấp</a>
+
+                </div>
+            </div>
+        }
+
+        <div class="row">
+
+            @foreach (var item in Model.ItemProducts)
+            {
+                <div class="col-3 product">
+                    <div class="single-product">
+                        @if (item.Saleoff != 0)
+                        {
+
+                            <p class="mrg0 iblck fl product__saleoff">-@item.Saleoff%</p>
+                        }
+                        <p class="mrg0 iblck fr product__views">
+                            <i class="fas fa-heart"></i> @item.Stars
+                            <i class="fas fa-eye"></i> @item.Views
+                            <i class="fas fa-shopping-cart"></i> @item.Orders
+                        </p>
+
+                        <div class="product-f-image">
+                            <img src="~/uploads/@item.Thumbnail" class="product__image" alt="" />
+                            <div class="product-hover">
+                                <a href="/Cart/SingleAddToCart/@item.Id" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm Giỏ Hàng</a>
+                                <a href="~/@item.TypeUrl/@item.NameUrl" class="view-details-link"><i class="fa fa-link"></i> Xem Chi Tiết</a>
+                            </div>
+                        </div>
+
+                        <div class="product__info ">
+                            <a href="~/@item.TypeUrl/@item.NameUrl" class="mrg0 product__name" style="color:red">@item.Name</a>
+                            @if (item.Saleoff != 0)
+                            {
+                                <p class="mrg0 product__oldprice">@String.Format("{0:0,0 VNĐ}", item.Price) </p>
+                                <p class="mrg0 product__newprice">@String.Format("{0:0,0 VNĐ}", item.Price - item.Price * item.Saleoff / 100)</p>
+                            }
+                            else
+                            {
+                                <p class="mrg0 product__newprice">@String.Format("{0:0,0 VNĐ}", item.Price)</p>
+                            }
+
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <!-- Section pagination -->
+        <div class="container txt-center section__pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <a href="~/products/@Model.OrderBy/@(Model.CurrentPage - 1)" class="paginumber paginumber--first"><i class="fas fa-caret-left"></i></a>
+            }
+
+            <!--chia nút-->
+            @if (Model.TotalPage <= 8)
+            {
+                for (int i = 1; i <= Model.TotalPage; i++)
+                {
+                    if (i != Model.CurrentPage)
+                    {
+                        <a href="~/products/@Model.OrderBy/@i" class="paginumber">@i</a>
+                    }
+                    if (i == Model.CurrentPage)
+                    {
+                        <a href="~/products/@Model.OrderBy/@i" class="paginumber paginumber--active">@i</a>
+                    }
+                }
+            }
+            else
+            {
+                if ((Model.CurrentPage - 1) <= 4)
+                {
+                    for (int i = 1; i <= 7; i++)
+                    {
+                        if (i != Model.CurrentPage)
+                        {
+                            <a href="~/products/@Model.OrderBy/@i" class="paginumber">@i</a>
+                        }
+                        if (i == Model.CurrentPage)
+                        {
+                            <a href="~/products/@Model.OrderBy/@i" class="paginumber paginumber--active">@i</a>
+                        }
+                    }
+                    <a href="" class="paginumber">...</a>
+                    <a href="~/products/@Model.OrderBy/@Model.TotalPage" class="paginumber">@Model.TotalPage</a>
+                }
+                else if ((Model.TotalPage - Model.CurrentPage) == 3)
+                {
+                    <a href="~/products/@Model.OrderBy/1" class="paginumber">1</a>
+                    <a href="" class="paginumber">...</a>
+                    for (int i = Model.TotalPage - 6; i <= Model.TotalPage; i++)
+                    {
+                        if (i != Model.CurrentPage)
+                        {
+                            <a href="~/products/@Model.OrderBy/@i" class="paginumber">@i</a>
+                        }
+                        if (i == Model.CurrentPage)
+                        {
+                            <a href="~/products/@Model.OrderBy/@i" class="paginumber paginumber--active">@i</a>
+                        }
+                    }
+                }
+                else if ((Model.TotalPage - Model.CurrentPage) < 3)
+                {
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        if (i != Model.CurrentPage)
+                        {
+                            <a href="~/products/@Model.OrderBy/@i" class="paginumber">@i</a>
+                        }
+                    }
+                    <a href="" class="paginumber">...</a>
+                    for (int i = Model.TotalPage - 4; i <= Model.TotalPage; i++)
+                    {
+                        if (i != Model.CurrentPage)
+                        {
+                            <a href="~/products/@Model.OrderBy/@i" class="paginumber">@i</a>
+                        }
+                        if (i == Model.CurrentPage)
+                        {
+                            <a href="~/products/@Model.OrderBy/@i" class="paginumber paginumber--active">@i</a>
+                        }
+                    }
+                }
+                else
+                {
+                    <a href="~/products/@Model.OrderBy/1" class="paginumber">1</a>
+                    <a href="" class="paginumber">...</a>
+
+                    <a href="~/products/@Model.OrderBy/@(Model.CurrentPage-2)" class="paginumber">@(Model.CurrentPage - 2)</a>
+                    <a href="~/products/@Model.OrderBy/@(Model.CurrentPage-1)" class="paginumber">@(Model.CurrentPage - 1)</a>
+                    <a href="~/products/@Model.OrderBy/@(Model.CurrentPage)" class="paginumber paginumber--active">@(Model.CurrentPage)</a>
+                    <a href="~/products/@Model.OrderBy/@(Model.CurrentPage+1)" class="paginumber">@(Model.CurrentPage + 1)</a>
+                    <a href="~/products/@Model.OrderBy/@(Model.CurrentPage+2)" class="paginumber">@(Model.CurrentPage + 2)</a>
+
+                    <a href="" class="paginumber">...</a>
+                    <a href="~/products/@Model.OrderBy/@Model.TotalPage" class="paginumber">@Model.TotalPage</a>
+                }
+            }
+
+            <!---->
+
+            @if (Model.CurrentPage <= Model.TotalPage - 1)
+            {
+                <a href="~/products/@Model.OrderBy/@(Model.CurrentPage + 1)" class="paginumber paginumber--last"><i class="fas fa-caret-right"></i></a>
+            }
+        </div>
+    </div>
+</div><!-- end of section Sản phẩm mới -->

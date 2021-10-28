@@ -1,0 +1,69 @@
+﻿@model CosmeticShop.ViewModels.AdminOrdersOverviewViewModel
+@{
+    ViewData["Title"] = "Quản lý đơn đặt hàng";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<div class="container-fluid overview">
+    <p class="overview__title">Đơn đặt hàng</p>
+    <table class="overview__table overview__table--orders">
+        <tr>
+            <th>Mã đơn</th>
+            <th>Tên Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Cập nhật</th>
+            <th>Hình thức thanh toán</th>
+            <th>Tình trạng</th>
+        </tr>
+        @foreach (var item in Model.Orders)
+        {
+            string tr_class = "";
+            switch(item.OrderStatus_Id)
+            {
+                case 1: tr_class = "orders--waiting";      break;
+                case 2: tr_class = "orders--delivering";     break;
+                case 3: tr_class = "orders--delivering"; break;
+                case 4: tr_class = "orders--delivered";    break;
+            }
+            string paytype = "";
+            switch(item.PayType_Id)
+            {
+                case 1: paytype = "Tiền mặt"; break;
+                case 2: paytype = "Paypal"; break;
+                case 3: paytype = "Ngân lượng"; break;
+            }
+            string ten = item.NameLast + ' ' + item.NameMiddle + ' ' + item.NameFirst;
+            <tr class=@tr_class>
+                <td><a asp-controller="Admin" asp-action="OrderCheck" asp-route-id="@item.Id">
+                    @item.Id
+                </a></td>
+                <td>@ten</td>
+                <td>@item.DateCreate.ToString("dd/MM/yyyy")</td>
+                <td>@item.DateModify.ToString("dd/MM/yyyy")</td>
+                <td>@paytype</td>
+                @if (item.PayStatus_Id == 1)
+                {
+                    <td>Chưa thanh toán</td>
+                }
+                else
+                {
+                    <td>Đã thanh toán</td>
+                }
+            </tr>
+        }
+    </table>
+
+    <div class="row">
+        <div class="container txt-center w100">
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi pagi--active">1</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">2</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">3</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">4</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">5</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">6</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">7</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">8</a>
+            <a asp-controller="Admin" asp-action="OrdersOverview" class="iblck pagi">9</a>
+        </div>
+    </div>
+</div>

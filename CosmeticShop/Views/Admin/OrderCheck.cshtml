@@ -1,0 +1,107 @@
+@model CosmeticShop.ViewModels.AdminOrderCheckViewModel
+@{
+    ViewData["Title"] = "Thông tin đơn hàng";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<div class="container-fluid create">
+    <a asp-action="OrdersOverview" asp-controller="Admin" class="overview__button overview__button"><i class="fas fa-backward"></i> Quay lại</a>
+    <hr>
+    <form asp-controller="Admin" asp-action="OrderCheck" method="post">
+        <input asp-for="@Model.Order.Id" type="hidden" readonly>
+        <div class="row">
+            <div class="col-5">
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.User_Id">Mã khách hàng</label>
+                        <input asp-for="@Model.Order.User_Id" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.PhoneNumber">Số điện thoại người nhận</label>
+                        <input asp-for="@Model.Order.PhoneNumber" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.NameLast">Họ</label>
+                        <input asp-for="@Model.Order.NameLast" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.NameMiddle">Họ đệm</label>
+                        <input asp-for="@Model.Order.NameMiddle" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.NameFirst">Tên</label>
+                        <input asp-for="@Model.Order.NameFirst" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.AddressApartment">Số nhà</label>
+                        <input asp-for="@Model.Order.AddressApartment" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.AddressStreet">Đường</label>
+                        <input asp-for="@Model.Order.AddressStreet" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.AddressDistrict">Quận / Huyện</label>
+                        <input asp-for="@Model.Order.AddressDistrict" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="col form-group">
+                        <label asp-for="@Model.Order.AddressCity">Thành phố / Tỉnh</label>
+                        <input asp-for="@Model.Order.AddressCity" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Order.TotalPrice">Tổng tiền</label>
+                    <input asp-for="@Model.Order.TotalPrice" type="text" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Order.OrderStatus_Id">Tình trạng đơn hàng</label>
+                    <select asp-for="@Model.Order.OrderStatus_Id" class="form-control">
+                        <option value="1">Đang chờ xử lý</option>
+                        <option value="2">Đang lấy hàng</option>
+                        <option value="3">Đang vận chuyển</option>
+                        <option value="4">Đã giao hàng</option>
+                    </select>
+                </div>
+                <button type="submit" class="button button--submit">Hoàn tất</button>
+            </div>
+            <div class="col-7">
+                <h3>Chi tiết đơn hàng</h3>
+                <table class="table">
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền (VNĐ)</th>
+                    </tr>
+                    @foreach (var detail in Model.OrderDetails)
+                    {
+                        <tr>
+                            @foreach(var product in Model.Products)
+                            {
+                                @if (product.Id == detail.Product_Id)
+                                {
+                                    <td>
+                                        @product.Name
+                                    </td>
+                                    break;
+                                }
+                            }
+                            <td>
+                                @detail.Quantity
+                            </td>
+                            <td>
+                                @String.Format("{0:0,0}", detail.PriceTotal)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+

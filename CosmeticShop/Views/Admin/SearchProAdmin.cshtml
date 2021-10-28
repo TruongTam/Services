@@ -1,0 +1,119 @@
+﻿@model CosmeticShop.ViewModels.AdminProductsViewModel
+@{
+    ViewData["Title"] = "Sản phẩm của Cosmetic";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+    }
+
+    form.example button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+
+        form.example button:hover {
+            background: #0b7dda;
+        }
+
+    form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+<div class="container-fluid overview">
+    <div class="row">
+        <div class="container-fluid">
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="overview__title overview__title--products overview__title--active">Sản phẩm</a>
+            <a asp-controller="Admin" asp-action="ProductBrandsOverview" class="overview__title overview__title--brands">Thương Hiệu</a>
+            <a asp-controller="Admin" asp-action="ProductTypesOverview" class="overview__title overview__title--types">Loại sản phẩm</a>
+        </div>
+    </div>
+    <a asp-controller="Admin" asp-action="ProductNew" class="overview__button overview__button--new"><i class="fas fa-plus"></i>Thêm sản phẩm</a>
+
+    <form class="example" style="max-width:300px" action="~/SearchProductAdmin/" method="get">
+        <input type="text" placeholder="Tìm tên sản phẩm" name="key_s">
+        <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+    <br />
+    <table class="overview__table overview__table--products">
+        <tr>
+            <th>Tên</th>
+            <th>Giá gốc</th>
+            <th>Khuyến mãi</th>
+            <th>Giá bán ra</th>
+            <th>Số lượng <br />trong kho</th>
+            <th><i class="fas fa-eye"></i></th>
+            <th><i class="fas fa-shopping-cart"></i></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Products)
+        {
+            Int32 @gia = @item.Price;
+            Int32 @salse = Int32.Parse(@item.Saleoff.ToString());
+            Int32 @tong = @item.Price - (@gia * @salse) / 100;
+
+            <tr>
+                <td>
+                    <a asp-controller="Admin" asp-action="ProductDetail" asp-route-id="@item.Id">
+                        @item.Name
+                    </a>
+                </td>
+                <td>
+                    @String.Format("{0:0,0 VNĐ}", item.Price)
+                </td>
+                <td>
+                    @item.Saleoff
+                </td>
+                <td>
+                    @String.Format("{0:0,0 VNĐ}", tong)
+                </td>
+                <td>
+                    @item.Instore
+                </td>
+                <td>
+                    @item.Views
+                </td>
+                <td>
+                    @item.Orders
+                </td>
+                <td><a asp-controller="Admin" asp-action="ProductDelete" asp-route-id="@item.Id" class="overview__button overview__button--delete"><i class="fas fa-trash-alt"></i> Xóa</a></td>
+            </tr>
+        }
+    </table>
+
+    <div class="row">
+        <div class="container txt-center w100">
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi pagi--active">1</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">2</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">3</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">4</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">5</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">6</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">7</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">8</a>
+            <a asp-controller="Admin" asp-action="ProductsOverview" class="iblck pagi">9</a>
+        </div>
+    </div>
+</div>

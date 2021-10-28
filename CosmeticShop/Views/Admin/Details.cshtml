@@ -1,0 +1,56 @@
+﻿@model CosmeticShop.Models.Admin
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Admin</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Role.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateCreate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateCreate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateModify)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateModify)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" class="overview__button overview__button " asp-route-id="@Model.Id"><i class="fas fa-edit"></i>Edit</a>
+    <a asp-action="AdminsOverview" class="overview__button overview__button">  <i class="fas fa-backward"></i> Back to List</a>
+</div>
+© 2019 GitHub, Inc.

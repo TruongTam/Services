@@ -1,0 +1,35 @@
+@model CosmeticShop.ViewModels.UserMyOrdersViewModel
+@{
+    ViewBag.Title = "Đơn đặt hàng của tôi";
+    Layout = "~/Views/Shared/Users/_IndexLayout.cshtml";
+    int user_id = (int)Context.Session.GetInt32("IdTaiKhoan");
+}
+
+<div class="container-fluid section">
+    <h2>Đơn hàng của @Context.Session.GetString("TenTaiKhoan")</h2>
+    <div class="row">
+        <div class="col-4">
+            @foreach (var vm in Model.MyOrderViewModels)
+            {
+                @if (vm.Order.OrderStatus_Id != 4)
+                {
+                    string status = "Đang chờ xử lý";
+                    if (vm.Order.OrderStatus_Id == 2) { status = "Đang lấy hàng"; }
+                    else if (vm.Order.OrderStatus_Id == 3) { status = "Đang vận chuyển"; }
+                    <a asp-controller="User" asp-action="MyOrderDetail" asp-route-user_id="@user_id" asp-route-order_id="@vm.Order.Id" class="blck vm_order">
+                        <p class="vm_order__id">Mã đơn hàng: @vm.Order.Id</p>
+                        <p class="vm_order__status">
+                            @status
+                        </p>
+                        <p class="vm_order__p">Ngày đặt hàng: @vm.Order.DateCreate.ToString("dd/MM/yyyy hh:mm")</p>
+                        <p class="vm_order__p">Tổng cộng: @String.Format("{0:0,0 VNĐ}", vm.Order.TotalPrice)</p>
+                    </a>
+                }
+            }
+        </div>
+        <div class="col-8">
+
+        </div>
+    </div>
+</div>
+

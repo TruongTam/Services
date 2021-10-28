@@ -1,0 +1,59 @@
+﻿@using CosmeticShop.Models;
+@using Microsoft.AspNetCore.Http;
+@using CosmeticShop.Controllers;
+<div class="container-fluid topmenu sticky">
+    <div class="container txt-left">
+
+        <a href="~/" class="topmenu__href">TRANG CHỦ</a>
+        <a href="~/products/orderbydatecreate" class="topmenu__href">SẢN PHẨM</a>
+        @{
+            int n1 = Model.productBrands.Count;
+            @if (n1 > 0)
+            {
+
+                <div class="topmenu__href topmenu__href--dropdown">
+                    <a href="#">THƯƠNG HIỆU<i class="fas fa-caret-down "></i></a>
+                    <div class="iblck mrg0 padd0 txt-center topmenu__submenu ">
+                        @for (int i = 0; i < n1; i++)
+                        {
+                            var type = Model.productBrands[i] as ProductBrand;
+                            ViewBag.hau = type;
+                            <a href="~/Products/@type.Name.ToUrlFriendly()" class="topmenu__href">@type.Name</a>
+                        }
+                    </div>
+
+                </div>
+
+
+            }
+
+        }
+
+        @{
+            int n = Model.ProductTypes.Count;
+            @if (n > 0)
+            {
+
+                <div class="topmenu__href topmenu__href--dropdown">
+                    <a href="#">LOẠI SẢN PHẨM<i class="fas fa-caret-down "></i></a>
+                    <div class="iblck mrg0 padd0 txt-center topmenu__submenu ">
+                        @for (int i = 0; i < n; i++)
+                        {
+                            var type = Model.ProductTypes[i] as ProductType;
+                            ViewBag.hau = type;
+                            <a href="~/@type.URL" class="topmenu__href">@type.Type</a>
+                        }
+                    </div>
+
+                </div>
+
+
+            }
+
+        }
+        <a href="~/lienhe/index" class="topmenu__href">LIÊN HỆ</a>
+        <a href="~/lienhe/about" class="topmenu__href">ABOUT</a>
+
+
+    </div>
+</div>

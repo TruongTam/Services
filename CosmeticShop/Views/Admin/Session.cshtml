@@ -1,0 +1,24 @@
+@model CosmeticShop.ViewModels.ProductEditViewModel
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Thông tin các Session";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+
+<div class="container-fluid create">
+    <p> TenTaiKhoan = 
+        @Context.Session.GetString("TenTaiKhoan");
+    </p>
+    <p> IdTaiKhoan = 
+        @Context.Session.GetString("IdTaiKhoan");
+    </p>
+    <p> CartId = 
+        @Context.Session.GetInt32("CartId");
+    </p>
+    <p> CartType = 
+        @Context.Session.GetString("CartType");
+    </p>
+    <p> DecodeResult = 
+        @Context.Session.GetString("DecodeResult");
+    </p>
+</div>

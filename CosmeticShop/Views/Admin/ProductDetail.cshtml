@@ -1,0 +1,69 @@
+@model CosmeticShop.ViewModels.ProductDetailViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Admin/_AdminIndexLayout.cshtml";
+}
+<div class="container-fluid create">
+    <a asp-action="ProductsOverview" asp-controller="Admin" class="overview__button overview__button"><i class="fas fa-backward"></i> Quay lại</a>
+    <hr>
+    <p class="create__title">Chi tiết sản phẩm</p>
+
+    <div class="row">
+        <div class="col-4">
+            <dl>
+                <dt>Tên sản phẩm</dt><dd>@Model.Product.Name
+                </dd>
+                <dt>Loại sản phẩm</dt><dd>@Model.ProductType
+                </dd>
+                <dt>Nhãn hàng</dt><dd>@Model.BrandName
+                </dd>
+                <dt>Đơn giá</dt><dd>@Model.Product.Price VNĐ
+                </dd>
+                <dt>Phần trăm giảm giá</dt><dd>@Model.Product.Saleoff %
+                </dd>
+                <dt>Mô tả sản phẩm</dt><dd><pre>@Model.Product.Description
+                </pre> 
+                </dd>
+            </dl>
+        </div>
+        <div class="col-4">
+            <dl>
+                <dt>Người đăng</dt><dd>@Model.AdminUsername
+                </dd>
+                <dt>Ngày đăng</dt><dd>@Model.Product.DateCreate
+                </dd>
+                <dt>Ngày chỉnh sửa cuối</dt><dd>@Model.Product.DateModify
+                </dd>
+                <dt>Điểm đánh giá trung bình</dt><dd>@Model.Product.Stars / 5
+                </dd>
+                <dt>Số lượt xem</dt><dd>@Model.Product.Views
+                </dd>
+                <dt>Số lượt đặt mua</dt><dd>@Model.Product.Orders
+                </dd>
+                <dt>Điểm tích lũy khi mua sản phẩm</dt><dd>@Model.Product.BuyPoints
+                </dd>
+                <dt>Số lượng hàng còn trong kho</dt><dd>@Model.Product.Instore
+                </dd>
+            </dl>
+        </div>
+        <div class="col-4">
+            <dl>
+                <dt>Ảnh đại diện sản phẩm</dt>
+                <dd>
+                    
+                        @if (Model.Product.Thumbnail != "" && Model.Product.Thumbnail != "#")
+                        {
+                            string source = @"/uploads/" + Model.Product.Thumbnail;
+                            <img src="@source" width="300" height="300">
+                        }
+                        else
+                        {
+                            <p>Sản phẩm chưa có ảnh đại diện</p>
+                        }
+                </dd>
+            </dl>
+        </div>
+    </div>
+   
+    <a asp-action="ProductEdit" asp-route-id="@Model.Product.Id" class="overview__button overview__button--new "><i class="fas fa-edit"></i> Chỉnh sửa thông tin</a>
+</div>

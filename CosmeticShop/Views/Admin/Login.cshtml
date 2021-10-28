@@ -1,0 +1,37 @@
+﻿@model CosmeticShop.Models.Admin
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trình quản lý website</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="~/bootstrap4/css/bootstrap.css">
+    <link rel="stylesheet" href="~/fas/css/all.css">
+    <link rel="stylesheet" href="~/css/atomic.css">
+    <link rel="stylesheet" href="~/css/admin.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 offset-4">
+                <form asp-controller="#" asp-action="#" class="login_form">
+                    <h3><i class="fas fa-cogs"></i> Cosmetic</h3>
+                    <div class="form-group">
+                        <input type="text" asp-for="Username" placeholder="Tên đăng nhập" class="form-control">
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" asp-for="Password" placeholder="Mật Khẩu" class="form-control">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="button button--submit">Đăng nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

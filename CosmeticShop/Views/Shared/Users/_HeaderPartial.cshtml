@@ -1,0 +1,40 @@
+﻿<header class="sticky" style="color:red">
+    <div class="container-fluid padd10">
+        <div class="row">
+            <div class="col-3 txt-left">
+                <a href="~/" class="iblck header__logo">Cosmetic</a>
+            </div>
+            <div class="col-4 txt-center">
+                <form action="~/search/" method="get">
+                    <input type="text" placeholder="Tìm tên sản phẩm" name="key_s">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div class="col-5 txt-center">
+                @{
+                    string name = Context.Session.GetString("TenTaiKhoan");
+                    int id = 0;
+                    if (Context.Session.GetInt32("IdTaiKhoan") != null){ id = (int)Context.Session.GetInt32("IdTaiKhoan");}
+
+                    @if (name != null)
+                    {
+                        <a asp-action="#" asp-route-id="@id" asp-controller="Users" class="iblck header__displayname"><i class="fas fa-user-alt"></i>
+                            @name
+                        </a>
+                        <a href="~/giohang" class="iblck header__icon"><i class="fas fa-shopping-cart"></i></a>
+                        <a asp-controller="User" asp-action="MyOrders" asp-route-id="@id" class="iblck header__icon"><i class="fas fa-shipping-fast"></i></a>
+                        <a asp-controller="User" asp-action="Logout" asp-route-id="@id" class="iblck header__icon"><i class="fas fa-sign-out-alt"></i></a>
+                    }
+                    else
+                    {
+                        <a asp-controller="User" asp-action="Login" class="iblck header__link">Đăng nhập</a>
+                        <a href="~/giohang" class="iblck header__icon"><i class="fas fa-shopping-cart"></i></a>
+                        <a href="#" class="iblck header__icon"><i class="fas fa-shipping-fast"></i></a>
+                    }
+                }
+                
+                
+            </div>
+        </div>
+    </div>
+</header>

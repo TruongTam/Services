@@ -1,0 +1,109 @@
+@model CosmeticShop.ViewModels.CheckoutIndexViewModel
+@{ViewBag.Title = "Thanh Toán";
+    Layout = "~/Views/Shared/Users/_IndexLayout.cshtml";
+}
+@using Microsoft.AspNetCore.Http;
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<div class="container-fluid section" id="CartItemContainer">
+    <div class="container">
+        <div class="row">
+            <h1 class="section__title">Đơn hàng <i class="fas fa-shopping-cart"></i></h1>
+        </div>
+
+        <div class="row">
+            <div class="col-7">
+                <table class="table">
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên hàng</th>
+                        <th scope="col" class="clCenter">Số lượng</th>
+                        <th scope="col" class="clCenter">Thành tiền</th>
+                    </tr>
+                    @{
+                        string hau = "";
+                        int stt = 0;
+                        int totalePrice = 0;
+                    }
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        stt++;
+                        string name = "";
+                        <tr>
+                            @foreach (var pro in Model.Products)
+                            {
+                                if (pro.Id == item.Product_Id) { name = pro.Name; }
+                            }
+                            <th scope="row">@stt</th>
+                            <td>@name</td>
+                            <td class="clCenter">@item.Quantity</td>
+                            <td class="clCenter"> @String.Format("{0:0,0 VNĐ}", item.PriceTotal)</td>
+
+                        </tr>
+                        totalePrice += item.PriceTotal;
+                    }
+                </table>
+
+            </div>
+
+            <div class="col-5">
+                @{Double @USD = totalePrice / 23000;}
+                <h2 style="color:red">Tổng cộng: @String.Format("{0:0,0 VNĐ}", totalePrice) </h2>
+                <h2 style="color:red">~  @String.Format("{0:0,0 USD}", USD) </h2>
+                @{int orderid = (int)Context.Session.GetInt32("OrderId");}
+                <a class="button button--delete" asp-controller="Checkout" asp-action="Cancel" asp-route-id="@orderid">Hủy đơn hàng</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+
+                @{
+                    int idtaikhoan = (int)Context.Session.GetInt32("IdTaiKhoan");
+                }
+                <a asp-controller="Checkout" asp-action="PayAfter" class="button button--order--after" style="width:350px">Thanh toán khi nhận hàng</a>
+
+
+                <a asp-controller="NganLuong" asp-action="Index" class="button button--order--nganluong" style="width:350px">Thanh toán qua Ngân Lượng</a>
+                <script src="https://www.paypal.com/sdk/js?client-id=ASwEi_Epa3m8n3CWA3FwX8SZGOkGGrQGecHV0V9TwjoEDFyEjVkAAXmsxiZnacTFyPCs3OaAgKNyP7V4">
+                                                                                // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+                </script>
+            </div>
+            <div class="col-6">
+                @*code javascript paypal*@
+                <form method="post" action="@ViewBag.payPalConfig.PostUrl">
+                    <input type="hidden" name="upload" value="1" />
+                    @{
+
+                        string return_url = ViewBag.payPalConfig.ReturnUrl + "?orderid=" + orderid.ToString();
+                    }
+                    <input type="hidden" name="return" value="@return_url" />
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="business" value="@ViewBag.payPalConfig.Business" />
+
+                    @{
+                        var index = 1;
+                    }
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        string name = "";
+                        foreach (var pro in Model.Products)
+                        {
+                            if (pro.Id == item.Product_Id) { name = pro.Name; }
+                        }
+                        double Price = item.PriceTotal / 23000;
+                        <input type="hidden" name="item_number_@index" value="@item.Id" />
+                        <input type="hidden" name="item_name_@index" value="@name" />
+                        <input type="hidden" name="amount_@index" value="@Price" />
+                        <input type="hidden" name="quantity_@index" value="@item.Quantity" />
+                        index++;
+                    }
+                    
+                  
+                    <input type="image" alt="Submit" src="~/images/paypal.jpg" style="width:350px;height:100px" />
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+    

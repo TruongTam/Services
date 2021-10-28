@@ -1,0 +1,131 @@
+﻿@model CosmeticShop.ViewModels.CartViewModel
+@{ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/Users/_IndexLayout.cshtml";
+}
+
+<div class="container-fluid section" id="CartItemContainer">
+    <div class="container">
+        <h1 class="section__title">
+            Giỏ hàng <i class="fas fa-shopping-cart"></i>
+        </h1>
+        <br />
+        <br />
+        <table cellspacing="0" class="shop_table cart">
+            <thead>
+                <tr>
+
+
+
+                    <th scope="col">STT</th>
+                    <th class="product-thumbnail">Ảnh Sản Phẩm</th>
+                    <th scope="col">Tên hàng</th>
+                    <th scope="col" class="clCenter" style="width:200px">Số lượng</th>
+                    <th class="product-price" style="width:150px">Price</th>
+                    <th scope="col" class="clCenter" style="width:150px">Thành tiền</th>
+                    <th scope="col" class="clCenter">Hủy sản phẩm</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int totalePrice = 0;
+                    int stt = 1;
+                }
+                @foreach (var item in Model.CartItemViewModels)
+                {
+
+                    <tr class="cart_item">
+                        <th scope="row">@stt</th>
+                        <td class="product-thumbnail">
+                            <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="~/uploads/@item.TenAnh"></a>
+                        </td>
+
+                        <td>@item.Name</td>
+
+
+
+
+                        <td class="clCenter"><a onclick="minusItem(@item.Id)"   class="CartEdit"><i class="fas fa-minus"></i></a>@item.Quantity<a onclick="plusItem(@item.Id)" class="CartEdit"><i class="fas fa-plus"></i></a></td>
+                        <td class="product-price">
+                            <span class="amount" > @String.Format("{0:0,0 VNĐ}", item.Price)</span>
+                        </td>
+                        <td class="clCenter"> @String.Format("{0:0,0 VNĐ}", item.TotalPrice)</td>
+
+                        <td class="clCenter">
+                            <!--<p onclick="deleteItem(@item.Id)" class="point btn btn-secondary btn-sm" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-times"></i></p>-->
+                            <p onclick="deleteItem(@item.Id)" class="point btn btn-secondary btn-sm"><i class="fas fa-times"></i></p>
+                        </td>
+                    </tr>
+                    totalePrice += item.TotalPrice;
+                    stt++;
+                }
+                <tr>
+                    <td class="actions" colspan="7">
+
+
+                        @if (Context.Session.GetInt32("IdTaiKhoan") == null)
+                        {
+                            if (Context.Session.GetInt32("IdCart") != null)
+                            {
+                                int anocart_id = (int)Context.Session.GetInt32("IdCart");
+                        
+                                <a asp-controller="Home" asp-action="Index" class="button button--gotocheckout" style="margin-right:700px"><< TIẾP TỤC MUA HÀNG</a>
+                                <a asp-controller="Checkout" asp-action="MustSignUp" class="button button--new" asp-route-anocartid="@anocart_id">THANH TOÁN</a>
+                            }
+                        }
+                        else
+                        {
+                            int userid = (int)Context.Session.GetInt32("IdTaiKhoan");
+                                <a asp-controller="Home" asp-action="Index" class="button button--gotocheckout" style="margin-right:700px"><< TIẾP TỤC MUA HÀNG</a>
+                            <a asp-controller="Checkout" asp-action="AlreadySignUp" class="button button--new" asp-route-userid="@userid">THANH TOÁN</a>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+
+          
+             </table>
+
+</div>
+</div>
+
+
+
+<script>
+    function plusItem(id) {
+        $.ajax({
+            url: "/cart/PlusItem",
+            method: "POST",
+            data: { id: id },
+            async: true,
+            dataType: "HTML",
+            success: function (data) {
+                $("#CartItemContainer").html(data);
+            }
+        });
+    };
+    function minusItem(id) {
+        $.ajax({
+            url: "/cart/MinusItem",
+            method: "POST",
+            data: { id: id },
+            async: true,
+            dataType: "HTML",
+            success: function (data) {
+                $("#CartItemContainer").html(data);
+            }
+        });
+    };
+
+    function deleteItem(id) {
+        $.ajax({
+            url: "/cart/DeleteItem",
+            method: "POST",
+            data: { id: id },
+            async: true,
+            dataType: "HTML",
+            success: function (data) {
+                $("#CartItemContainer").html(data);
+            }
+        });
+    }
+</script>

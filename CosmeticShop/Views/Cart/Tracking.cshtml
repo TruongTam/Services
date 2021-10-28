@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Theo dõi tình trạng đơn hàng";
+    Layout = "~/Views/Shared/Users/_IndexLayout.cshtml";
+}
+
+@*<h1>Tracking</h1>*@
+<div class="container-fluid section">
+    <div class="form-row justify-content-lg-center">
+        <div class="form-group col">
+            <label for="orderId">Mã đơn hàng</label>
+            <div class="input-group">
+                <input type="text" id="orderId" class="form-control" placeholder="tìm kiếm ..." />
+                <button class="btn btn-primary input-group-append">Tìm kiếm</button>
+            </div>
+            <small id="orderIdHelp" class="form-text text-muted">Nhập mã đơn hàng cần theo dõi</small>
+        </div>
+        
+    </div>
+    <table class="table">
+        <thead>
+            <tr scope="col">Mã đơn hàng</tr>
+            <tr scope="col">Địa chỉ giao hàng</tr>
+            <tr scope="col">Tên người nhận</tr>
+            <tr scope="col">Tên người giao hàng</tr>
+            <tr scope="col">SDT liên lạc</tr>
+            <tr scope="col">Tình trạng</tr>
+        </thead>
+        <tbody>
+            <td scope="row">123456</td>
+            <td>222 Trường Chinh p5 q13</td>
+            <td>Hoàng</td>
+            <td>Trần Văn Việt</td>
+            <td>19008181</td>
+            <td>Chờ xử lý</td>
+        </tbody>
+    </table>
+</div>
+
